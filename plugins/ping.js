@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   command: 'ping',
   description: 'Responds with Pong.',
   run: async (sock, m, { text }) => {
