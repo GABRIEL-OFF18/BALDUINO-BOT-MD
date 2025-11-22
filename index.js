@@ -1,137 +1,326 @@
 
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'
 import './config.js'
+import { setupMaster, fork } from 'cluster'
 import { watchFile, unwatchFile } from 'fs'
 import cfonts from 'cfonts'
-import { createRequire } from 'module'
-import { fileURLToPath, pathToFileURL } from 'url'
-import { platform } from 'process'
+import {createRequire} from 'module'
+import {fileURLToPath, pathToFileURL} from 'url'
+import {platform} from 'process'
 import * as ws from 'ws'
-import fs, { readdirSync, statSync, unlinkSync, existsSync, mkdirSync, readFileSync, rmSync, watch } from 'fs'
-import yargs from 'yargs'
-import { spawn } from 'child_process'
+import fs, {readdirSync, statSync, unlinkSync, existsSync, mkdirSync, readFileSync, rmSync, watch} from 'fs'
+import yargs from 'yargs';
+import {spawn} from 'child_process'
 import lodash from 'lodash'
 import chalk from 'chalk'
 import syntaxerror from 'syntax-error'
-import { tmpdir } from 'os'
-import { format } from 'util'
+import {tmpdir} from 'os'
+import {format} from 'util'
 import P from 'pino'
 import pino from 'pino'
 import path, { join, dirname } from 'path'
-import { Boom } from '@hapi/boom'
-import { makeWASocket, protoType, serialize } from './lib/simple.js'
-import { Low, JSONFile } from 'lowdb'
+import {Boom} from '@hapi/boom'
+import {makeWASocket, protoType, serialize} from './lib/simple.js'
+import {Low, JSONFile} from 'lowdb'
 import store from './lib/store.js'
-const { proto } = (await import('@whiskeysockets/baileys')).default
+const {proto} = (await import('@whiskeysockets/baileys')).default
 import pkg from 'google-libphonenumber'
 const { PhoneNumberUtil } = pkg
 const phoneUtil = PhoneNumberUtil.getInstance()
-const { DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser } = await import('@whiskeysockets/baileys')
+const {DisconnectReason, useMultiFileAuthState, MessageRetryMap, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser} = await import('@whiskeysockets/baileys')
 import readline from 'readline'
 import NodeCache from 'node-cache'
 
-const { CONNECTING } = ws
-const { chain } = lodash
+const {CONNECTING} = ws
+const {chain} = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
 let { say } = cfonts
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
-
-global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
+console.log(chalk.bold.greenBright(`\nStarting Kenny\n`))
 
 say('GOJO BOT', {
-  font: 'block',
-  align: 'center',
-  colors: ['yellowBright']
+font: 'block',
+align: 'center',
+colors: ['yellowBright']
 })
 
 say(`Made With By ABRAHAN-M Y STAFF GOJO`, {
-  font: 'console',
-  align: 'center',
-  colors: ['cyan']
+font: 'console',
+align: 'center',
+colors: ['cyan']
 })
 
-if (!existsSync("./Gojo-sessions")) {
-  mkdirSync("./Gojo-sessions");
+protoType()
+serialize()
+
+if (!existsSync("./tmp")) {
+  mkdirSync("./tmp");
 }
 
+global.__filename = function filename(pathURL = import.meta.url, rmPrefix = platform !== 'win32') {
+return rmPrefix ? /file:\/\/\//.test(pathURL) ? fileURLToPath(pathURL) : pathURL : pathToFileURL(pathURL).toString();
+}; global.__dirname = function dirname(pathURL) {
+return path.dirname(global.__filename(pathURL, true))
+}; global.__require = function require(dir = import.meta.url) {
+return createRequire(dir)
+}
+
+global.API = (name, path = '/', query = {}, apikeyqueryname) => (name in global.APIs ? global.APIs[name] : name) + path + (query || apikeyqueryname ? '?' + new URLSearchParams(Object.entries({...query, ...(apikeyqueryname ? {[apikeyqueryname]: global.APIKeys[name in global.APIs ? global.APIs[name] : name]} : {})})) : '');
+
+global.timestamp = {start: new Date}
+
+const __dirname = global.__dirname(import.meta.url)
+
+global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
+global.prefix = new RegExp('^[#/!.]')
+
+global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('./database.json'))
+
+global.DATABASE = global.db
+global.loadDatabase = async function loadDatabase() {
+if (global.db.READ) {
+return new Promise((resolve) => setInterval(async function() {
+if (!global.db.READ) {
+clearInterval(this)
+resolve(global.db.data == null ? global.loadDatabase() : global.db.data);
+}}, 1 * 1000))
+}
+if (global.db.data !== null) return
+global.db.READ = true
+await global.db.read().catch(console.error)
+global.db.READ = null
+global.db.data = {
+users: {},
+chats: {},
+stats: {},
+msgs: {},
+sticker: {},
+settings: {},
+...(global.db.data || {}),
+}
+global.db.chain = chain(global.db.data)
+}
+loadDatabase()
+
+const {state, saveState, saveCreds} = await useMultiFileAuthState(global.sessions)
+const msgRetryCounterMap = (MessageRetryMap) => { };
+const msgRetryCounterCache = new NodeCache()
+const {version} = await fetchLatestBaileysVersion();
+let phoneNumber = global.botNumber
+
+const methodCodeQR = process.argv.includes("qr")
+const methodCode = !!phoneNumber || process.argv.includes("code")
+const MethodMobile = process.argv.includes("mobile")
+const colores = chalk.bgMagenta.white
+const opcionQR = chalk.bold.green
+const opcionTexto = chalk.bold.cyan
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
+const question = (texto) => new Promise((resolver) => rl.question(texto, resolver))
+
+let opcion
+if (methodCodeQR) {
+opcion = '1'
+}
+if (!methodCodeQR && !methodCode && !fs.existsSync(`./sessions/creds.json`)) {
+do {
+opcion = await question(colores('⌨ Seleccione una opción:\n') + opcionQR('1. Con código QR\n') + opcionTexto('2. Con código de texto de 8 dígitos\n--> '))
+
+if (!/^[1-2]$/.test(opcion)) {
+console.log(chalk.bold.redBright(`✦ No se permiten numeros que no sean 1 o 2, tampoco letras o símbolos especiales.`))
+}} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./sessions/creds.json`))
+}
+
+const connectionOptions = {
+logger: pino({ level: 'silent' }),
+printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
+mobile: MethodMobile,
+browser: opcion == '1' ? [`${nameqr}`, 'Edge', '20.0.04'] : methodCodeQR ? [`${nameqr}`, 'Edge', '20.0.04'] : ['Windows', 'Edge', '110.0.1587.56'],
+auth: {
+creds: state.creds,
+keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
+},
+markOnlineOnConnect: true,
+generateHighQualityLinkPreview: true,
+getMessage: async (clave) => {
+let jid = jidNormalizedUser(clave.remoteJid)
+let msg = await store.loadMessage(jid, clave.id)
+return msg?.message || ""
+},
+msgRetryCounterCache,
+msgRetryCounterMap,
+defaultQueryTimeoutMs: undefined,
+version,
+}
+
+global.conn = makeWASocket(connectionOptions);
+
+if (!fs.existsSync(`./sessions/creds.json`)) {
+if (opcion === '2' || methodCode) {
+opcion = '2'
+if (!conn.authState.creds.registered) {
+let addNumber
+if (!!phoneNumber) {
+addNumber = phoneNumber.replace(/[^0-9]/g, '')
+} else {
+do {
+phoneNumber = await question(chalk.bgBlack(chalk.bold.greenBright(`✦ Por favor, Ingrese el número de WhatsApp.\n${chalk.bold.yellowBright(`✏  Ejemplo: 50584xxxxxx`)}\n${chalk.bold.magentaBright('---> ')}`)))
+phoneNumber = phoneNumber.replace(/\D/g,'')
+if (!phoneNumber.startsWith('+')) {
+phoneNumber = `+${phoneNumber}`
+}
+} while (!await isValidPhoneNumber(phoneNumber))
+rl.close()
+addNumber = phoneNumber.replace(/\D/g, '')
+setTimeout(async () => {
+let codeBot = await conn.requestPairingCode(addNumber)
+codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot
+console.log(chalk.bold.white(chalk.bgMagenta(`✧ CÓDIGO DE VINCULACIÓN ✧`)), chalk.bold.white(chalk.white(codeBot)))
+}, 3000)
+}}}
+}
+
+conn.isInit = false;
+
+if (!opts['test']) {
+if (global.db) setInterval(async () => {
+if (global.db.data) await global.db.write()
+}, 30 * 1000);
+}
+
+async function connectionUpdate(update) {
+const {connection, lastDisconnect, isNewLogin} = update;
+if (isNewLogin) conn.isInit = true;
+const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode;
+if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
+await global.reloadHandler(true).catch(console.error);
+global.timestamp.connect = new Date;
+}
+if (global.db.data == null) loadDatabase();
+if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
+if (opcion == '1' || methodCodeQR) {
+console.log(chalk.bold.yellow(`\n❐ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS`))
+}
+}
+if (connection == 'open') {
+console.log(chalk.bold.green('\nKennyBot Conectado con éxito.'))
+}
+let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
+if (connection === 'close') {
+if (reason === DisconnectReason.badSession) {
+console.log(chalk.bold.cyanBright(`\n⚠︎ SIN CONEXIÓN, BORRE LA CARPETA sessions Y REINICIA EL SERVIDOR ⚠︎`))
+} else if (reason === DisconnectReason.connectionClosed) {
+console.log(chalk.bold.magentaBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ☹\n┆ ⚠︎ CONEXION CERRADA, RECONECTANDO....\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ☹`))
+await global.reloadHandler(true).catch(console.error)
+} else if (reason === DisconnectReason.connectionLost) {
+console.log(chalk.bold.blueBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ☂\n┆ ⚠︎ CONEXIÓN PERDIDA CON EL SERVIDOR, RECONECTANDO....\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ☂`))
+await global.reloadHandler(true).catch(console.error)
+} else if (reason === DisconnectReason.connectionReplaced) {
+console.log(chalk.bold.yellowBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ✗\n┆ ⚠︎ CONEXIÓN REEMPLAZADA, SE HA ABIERTO OTRA NUEVA SESION, POR FAVOR, CIERRA LA SESIÓN ACTUAL PRIMERO.\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ✗`))
+} else if (reason === DisconnectReason.loggedOut) {
+console.log(chalk.bold.redBright(`\n⚠︎ SIN CONEXIÓN, BORRE LA CARPETA sessions Y REINICIA EL SERVIDOR  ⚠︎`))
+await global.reloadHandler(true).catch(console.error)
+} else if (reason === DisconnectReason.restartRequired) {
+console.log(chalk.bold.cyanBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ✓\n┆ ✧ CONECTANDO AL SERVIDOR...\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ✓`))
+await global.reloadHandler(true).catch(console.error)
+} else if (reason === DisconnectReason.timedOut) {
+console.log(chalk.bold.yellowBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ▸\n┆ ⧖ TIEMPO DE CONEXIÓN AGOTADO, RECONECTANDO....\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄ ▸`))
+await global.reloadHandler(true).catch(console.error)
+} else {
+console.log(chalk.bold.redBright(`\n⚠︎！ RAZON DE DESCONEXIÓN DESCONOCIDA: ${reason || 'No encontrado'} >> ${connection || 'No encontrado'}`))
+}}
+}
+
+process.on('uncaughtException', console.error)
+
+let isInit = true;
 let handler = await import('./handler.js')
-let M_IMPORT = import.meta.url
-
-async function startGojo() {
-  const { state, saveCreds } = await useMultiFileAuthState('./Gojo-sessions')
-  const { version, isLatest } = await fetchLatestBaileysVersion()
-
-  const connectionOptions = {
-    logger: pino({ level: 'silent' }),
-    printQRInTerminal: true,
-    browser: ['Gojo-Bot', 'Safari', '1.0.0'],
-    auth: {
-      creds: state.creds,
-      keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
-    },
-    version
-  }
-
-  const conn = makeWASocket(connectionOptions)
-  store.bind(conn)
-
-  conn.ev.on('messages.upsert', async chatUpdate => {
-    try {
-      const mek = chatUpdate.messages[0]
-      if (!mek.message) return
-      mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
-      if (mek.key && mek.key.remoteJid === 'status@broadcast') return
-      if (!conn.public && !mek.key.fromMe && chatUpdate.type === 'notify') return
-      if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
-      const m = serialize(conn, mek, store)
-      handler.handler(conn, m, chatUpdate)
-    } catch (err) {
-      console.error(err)
-    }
-  })
-
-  conn.ev.on('connection.update', async (update) => {
-    const { connection, lastDisconnect } = update
-    if (connection === 'close') {
-      let reason = new Boom(lastDisconnect?.error)?.output.statusCode
-      if (reason === DisconnectReason.badSession) {
-        console.log(`Bad Session File, Please Delete Session and Scan Again`)
-        startGojo()
-      } else if (reason === DisconnectReason.connectionClosed) {
-        console.log("Connection closed, reconnecting....")
-        startGojo()
-      } else if (reason === DisconnectReason.connectionLost) {
-        console.log("Connection Lost from Server, reconnecting...")
-        startGojo()
-      } else if (reason === DisconnectReason.connectionReplaced) {
-        console.log("Connection Replaced, Another New Session Opened, Please Close Current Session First")
-        startGojo()
-      } else if (reason === DisconnectReason.loggedOut) {
-        console.log(`Device Logged Out, Please Scan Again And Run.`)
-        startGojo()
-      } else if (reason === DisconnectReason.restartRequired) {
-        console.log("Restart Required, Restarting...")
-        startGojo()
-      } else if (reason === DisconnectReason.timedOut) {
-        console.log("Connection TimedOut, Reconnecting...")
-        startGojo()
-      } else {
-        conn.end(`Unknown DisconnectReason: ${reason}|${connection}`)
-      }
-    } else if (connection === 'open') {
-      console.log('Connected to WhatsApp')
-    }
-  })
-
-  conn.ev.on('creds.update', saveCreds)
+global.reloadHandler = async function(restatConn) {
+try {
+const Handler = await import(`./handler.js?update=${Date.now()}`).catch(console.error);
+if (Object.keys(Handler || {}).length) handler = Handler
+} catch (e) {
+console.error(e);
+}
+if (restatConn) {
+const oldChats = global.conn.chats
+try {
+global.conn.ws.close()
+} catch { }
+conn.ev.removeAllListeners()
+global.conn = makeWASocket(connectionOptions, {chats: oldChats})
+isInit = true
+}
+if (!isInit) {
+conn.ev.off('messages.upsert', conn.handler)
+conn.ev.off('connection.update', conn.connectionUpdate)
+conn.ev.off('creds.update', conn.credsUpdate)
 }
 
-startGojo()
+conn.handler = handler.handler.bind(global.conn)
+conn.connectionUpdate = connectionUpdate.bind(global.conn)
+conn.credsUpdate = saveCreds.bind(global.conn, true)
 
-let file = fileURLToPath(M_IMPORT)
-watchFile(file, () => {
-  unwatchFile(file)
-  console.log(chalk.redBright("Update 'index.js'"))
-  import(`${file}?update=${Date.now()}`)
-})
+conn.ev.on('messages.upsert', conn.handler)
+conn.ev.on('connection.update', conn.connectionUpdate)
+conn.ev.on('creds.update', conn.credsUpdate)
+isInit = false
+return true
+};
+
+const pluginFolder = global.__dirname(join(__dirname, './plugins'))
+const pluginFilter = (filename) => /\.js$/.test(filename)
+global.plugins = {}
+async function filesInit() {
+for (const filename of readdirSync(pluginFolder).filter(pluginFilter)) {
+try {
+const file = global.__filename(join(pluginFolder, filename))
+const module = await import(file)
+global.plugins[filename] = module.default || module
+} catch (e) {
+conn.logger.error(e)
+delete global.plugins[filename]
+}}}
+filesInit().then((_) => Object.keys(global.plugins)).catch(console.error);
+
+global.reload = async (_ev, filename) => {
+if (pluginFilter(filename)) {
+const dir = global.__filename(join(pluginFolder, filename), true);
+if (filename in global.plugins) {
+if (existsSync(dir)) conn.logger.info(` updated plugin - '${filename}'`)
+else {
+conn.logger.warn(`deleted plugin - '${filename}'`)
+return delete global.plugins[filename]
+}} else conn.logger.info(`new plugin - '${filename}'`);
+const err = syntaxerror(readFileSync(dir), filename, {
+sourceType: 'module',
+allowAwaitOutsideFunction: true,
+});
+if (err) conn.logger.error(`syntax error while loading '${filename}'\n${format(err)}`)
+else {
+try {
+const module = (await import(`${global.__filename(dir)}?update=${Date.now()}`));
+global.plugins[filename] = module.default || module;
+} catch (e) {
+conn.logger.error(`error require plugin '${filename}\n${format(e)}'`)
+} finally {
+global.plugins = Object.fromEntries(Object.entries(global.plugins).sort(([a], [b]) => a.localeCompare(b)))
+}}
+}}
+Object.freeze(global.reload)
+watch(pluginFolder, global.reload)
+await global.reloadHandler()
+
+async function isValidPhoneNumber(number) {
+try {
+number = number.replace(/\s+/g, '')
+if (number.startsWith('+521')) {
+number = number.replace('+521', '+52');
+} else if (number.startsWith('+52') && number[4] === '1') {
+number = number.replace('+52 1', '+52');
+}
+const parsedNumber = phoneUtil.parseAndKeepRawInput(number)
+return phoneUtil.isValidNumber(parsedNumber)
+} catch (error) {
+return false
+}}
