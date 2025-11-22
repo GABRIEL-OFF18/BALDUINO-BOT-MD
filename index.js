@@ -1,7 +1,8 @@
 
 import './config.js';
 import { Boom } from '@hapi/boom';
-import makeWASocket, {
+import {
+  default as makeWASocket,
   DisconnectReason,
   useMultiFileAuthState,
   fetchLatestBaileysVersion,
@@ -12,12 +13,6 @@ import readline from 'readline';
 import handler from './handler.js';
 
 const logger = pino({ level: 'info' });
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-const question = (text) => new Promise((resolve) => rl.question(text, resolve));
 
 async function connectToWhatsApp() {
   const { state, saveCreds } = await useMultiFileAuthState('.auth_info_baileys');
@@ -36,6 +31,8 @@ async function connectToWhatsApp() {
   });
 
   if (global.usePairingCode && !sock.authState.creds.registered) {
+    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    const question = (text) => new Promise((resolve) => rl.question(text, resolve));
     const phoneNumber = await question('Please enter your mobile phone number:\n');
     const code = await sock.requestPairingCode(phoneNumber.trim());
     console.log(`Your pairing code is: ${code}`);
