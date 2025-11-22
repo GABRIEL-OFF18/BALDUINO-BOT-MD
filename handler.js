@@ -26,10 +26,10 @@ function saveDatabase() {
   fs.writeFileSync('./database.json', JSON.stringify(database, null, 2));
 }
 
-const plugins = {};
 const pluginsDir = path.join(__dirname, 'plugins');
 const pluginFiles = fs.readdirSync(pluginsDir).filter(file => file.endsWith('.js'));
 
+const plugins = {};
 for (const file of pluginFiles) {
   try {
     const filePath = path.join(pluginsDir, file);
@@ -72,7 +72,7 @@ const handler = async function(sock, m) {
   if (!isCmd) return;
 
   const [command, ...args] = text.slice(prefix.length).trim().split(/ +/);
-  const requestedPlugin = plugins[command.toLowerCase()];
+  const requestedPlugin = Object.values(plugins).find(plugin => plugin.command && plugin.command.includes(command.toLowerCase()));
 
   if (requestedPlugin) {
     try {
