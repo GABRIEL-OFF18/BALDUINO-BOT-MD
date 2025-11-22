@@ -28,8 +28,10 @@ for (const file of pluginFiles) {
     const fileUrl = pathToFileURL(filePath).href;
     const module = await import(fileUrl);
     const plugin = module.default;
-    if (plugin && plugin.command) {
-      plugins[plugin.command] = plugin;
+    if (plugin && Array.isArray(plugin.command)) {
+      plugin.command.forEach(cmd => {
+        plugins[cmd.toLowerCase()] = plugin;
+      });
     }
   } catch (e) {
     console.error(`Error loading plugin ${file}:`, e);
@@ -63,11 +65,11 @@ const handler = async function(sock, m) {
   if (!isCmd) return;
 
   const [command, ...args] = text.slice(prefix.length).trim().split(/ +/);
-  const requestedPlugin = Object.values(plugins).find(p => p.command === command.toLowerCase());
+  const requestedPlugin = plugins[command.toLowerCase()];
 
   if (requestedPlugin) {
     try {
-      await requestedPlugin.run(sock, m, { command, args, text, db: database });
+      await requestedPlugin(sock, m, { command, args, text, db: database });
       saveDatabase();
     } catch (e) {
       console.error(`Error executing plugin ${command}:`, e);
