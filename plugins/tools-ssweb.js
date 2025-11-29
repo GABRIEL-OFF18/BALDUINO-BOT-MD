@@ -9,7 +9,7 @@ conn.sendFile(m.chat, ss, 'error.png', args[0], fkontak)
 await m.react('✔️')
 } catch (error) {
 await m.react('✖️')
-return conn.reply(m.chat, `⚠︎ Se ha producido un problema.\n> Usa *${usedPrefix}report* para informarlo.\n\n${error.message}`, m)
+return conn.reply(m.chat, `⚠︎ Se ha producido un problema.\n> Usa \*${usedPrefix}report\* para informarlo.\n\n${e.message}
 }}
 
 handler.help = ['ssweb', 'ss']
