@@ -8,199 +8,199 @@ let who = await (async () => global.db.data.users[userId].name || (async () => {
 let str, query
 switch (command) {
 case 'angry': case 'enojado':
-str = from === who ? `\`${from}\` está enojado/a! 凸ಠ益ಠ)凸` : `\`${from}\` está enojado/a con \`${who}\`! 凸ಠ益ಠ)凸`
+str = from === who ? `\`${from}\` está enojado.` : `\`${from}\` está enojado con \`${who}\`.`
 query = 'anime angry'
 break
 case 'bath': case 'bañarse':
-str = from === who ? `\`${from}\` se está bañando! ٩(ˊᗜˋ )و` : `\`${from}\` está bañando a \`${who}\`! ٩(ˊᗜˋ )و`
+str = from === who ? `\`${from}\` se está bañando.` : `\`${from}\` está bañando a \`${who}\`.`
 query = 'anime bath'
 break
 case 'bite': case 'morder':
-str = from === who ? `\`${from}\` se mordió a sí mismo/a! ≽^•⩊•^≼` : `\`${from}\` mordió a \`${who}\`! ≽^•⩊•^≼`
+str = from === who ? `\`${from}\` se mordió.` : `\`${from}\` mordió a \`${who}\`.`
 query = 'anime bite'
 break
 case 'bleh': case 'lengua':
-str = from === who ? `\`${from}\` saca la lengua! (｡╹ω╹｡)` : `\`${from}\` le sacó la lengua a \`${who}\`! (｡╹ω╹｡)`
+str = from === who ? `\`${from}\` saca la lengua.` : `\`${from}\` le sacó la lengua a \`${who}\`.`
 query = 'anime bleh'
 break
 case 'blush': case 'sonrojarse':
-str = from === who ? `\`${from}\` se sonrojó! ( ˶o˶˶o˶)` : `\`${from}\` se sonrojó por \`${who}\`! ( ˶o˶˶o˶)`
+str = from === who ? `\`${from}\` se sonrojó.` : `\`${from}\` se sonrojó por \`${who}\`.`
 query = 'anime blush'
 break
 case 'bored': case 'aburrido':
-str = from === who ? `\`${from}\` está aburrido/a! ( ¬_¬)` : `\`${from}\` está aburrido/a de \`${who}\`! ( ¬_¬)`
+str = from === who ? `\`${from}\` está aburrido.` : `\`${from}\` está aburrido de \`${who}\`.`
 query = 'anime bored'
 break
 case 'clap': case 'aplaudir':
-str = from === who ? `\`${from}\` está aplaudiendo! (୨୧•͈ᴗ•͈)` : `\`${from}\` está aplaudiendo por \`${who}\`! (୨୧•͈ᴗ•͈)`
+str = from === who ? `\`${from}\` está aplaudiendo.` : `\`${from}\` está aplaudiendo por \`${who}\`.`
 query = 'anime clap'
 break
 case 'coffee': case 'cafe': case 'café':
-str = from === who ? `\`${from}\` está tomando café! ٩(●ᴗ●)۶` : `\`${from}\` está tomando café con \`${who}\`! ٩(●ᴗ●)۶`
+str = from === who ? `\`${from}\` está tomando café.` : `\`${from}\` está tomando café con \`${who}\`.`
 query = 'anime coffee'
 break
 case 'cry': case 'llorar':
-str = from === who ? `\`${from}\` está llorando! (╥_╥)` : `\`${from}\` está llorando por \`${who}\`! (╥_╥)`
+str = from === who ? `\`${from}\` está llorando.` : `\`${from}\` está llorando por \`${who}\`.`
 query = 'anime cry'
 break
 case 'cuddle': case 'acurrucarse':
-str = from === who ? `\`${from}\` se acurrucó con sí mismo/a! ꒰ঌ(˶ˆᗜˆ˵)໒꒱` : `\`${from}\` se acurrucó con \`${who}\`! ꒰ঌ(˶ˆᗜˆ˵)໒꒱`
+str = from === who ? `\`${from}\` se acurrucó.` : `\`${from}\` se acurrucó con \`${who}\`.`
 query = 'anime cuddle'
 break
 case 'dance': case 'bailar':
-str = from === who ? `\`${from}\` está bailando! (ﾉ^ヮ^)ﾉ*:・ﾟ✧` : `\`${from}\` está bailando con \`${who}\`! (ﾉ^ヮ^)ﾉ*:・ﾟ✧`
+str = from === who ? `\`${from}\` está bailando.` : `\`${from}\` está bailando con \`${who}\`.`
 query = 'anime dance'
 break
 case 'drunk': case 'borracho':
-str = from === who ? `\`${from}\` está borracho! (⸝⸝๑﹏๑⸝⸝)` : `\`${from}\` está borracho con \`${who}\`! (⸝⸝๑﹏๑⸝⸝)`
+str = from === who ? `\`${from}\` está borracho.` : `\`${from}\` está borracho con \`${who}\`.`
 query = 'anime drunk'
 break
 case 'eat': case 'comer':
-str = from === who ? `\`${from}\` está comiendo! (っ˘ڡ˘ς)` : `\`${from}\` está comiendo con \`${who}\`! (っ˘ڡ˘ς)`
+str = from === who ? `\`${from}\` está comiendo.` : `\`${from}\` está comiendo con \`${who}\`.`
 query = 'anime eat'
 break
 case 'facepalm': case 'palmada':
-str = from === who ? `\`${from}\` se da una palmada en la cara! (ভ_ ভ) ރ` : `\`${from}\` se frustra y se da una palmada en la cara por \`${who}\`! (ভ_ ভ) ރ`
+str = from === who ? `\`${from}\` se da una palmada en la cara.` : `\`${from}\` se frustra y se da una palmada en la cara por \`${who}\`.`
 query = 'anime facepalm'
 break
 case 'happy': case 'feliz':
-str = from === who ? `\`${from}\` está feliz! ٩(˶ˆᗜˆ˵)و` : `\`${from}\` está feliz por \`${who}\`! ٩(˶ˆᗜˆ˵)و`;
+str = from === who ? `\`${from}\` está feliz.` : `\`${from}\` está feliz por \`${who}\`.`;
 query = 'anime happy';
 break
 case 'hug': case 'abrazar':
-str = from === who ? `\`${from}\` se abrazó a sí mismo/a! (づ˶•༝•˶)づ♡` : `\`${from}\` abrazó a \`${who}\`! (づ˶•༝•˶)づ♡`;
+str = from === who ? `\`${from}\` se abrazó.` : `\`${from}\` abrazó a \`${who}\`.`;
 query = 'anime hug'
 break
 case 'kill': case 'matar':
-str = from === who ? `\`${from}\` se mató a sí mismo/a! ( ⚆ _ ⚆ )` : `\`${from}\` mató a \`${who}\`! ( ⚆ _ ⚆ )`
+str = from === who ? `\`${from}\` se mató.` : `\`${from}\` mató a \`${who}\`.`
 query = 'anime kill'
 break
 case 'kiss': case 'muak':
-str = from === who ? `\`${from}\` se besó a sí mismo/a! ( ˘ ³˘)♥` : `\`${from}\` besó a \`${who}\`! ( ˘ ³˘)♥`
+str = from === who ? `\`${from}\` se besó.` : `\`${from}\` besó a \`${who}\`.`
 query = 'anime kiss'
 break
 case 'laugh': case 'reirse':
-str = from === who ? `\`${from}\` se ríe! (≧▽≦)` : `\`${from}\` se está riendo de \`${who}\`! (≧▽≦)`
+str = from === who ? `\`${from}\` se ríe.` : `\`${from}\` se está riendo de \`${who}\`.`
 query = 'anime laugh'
 break
 case 'lick': case 'lamer':
-str = from === who ? `\`${from}\` se lamió a sí mismo/a!（＾ω＾）` : `\`${from}\` lamió a \`${who}\`!（＾ω＾）`
+str = from === who ? `\`${from}\` se lamió.` : `\`${from}\` lamió a \`${who}\`.`
 query = 'anime lick'
 break
 case 'slap': case 'bofetada':
-str = from === who ? `\`${from}\` se golpeó a sí mismo/a! ᕙ(⇀‸↼‵‵)ᕗ` : `\`${from}\` le dio una bofetada a \`${who}\`! ᕙ(⇀‸↼‵‵)ᕗ`
+str = from === who ? `\`${from}\` se golpeó.` : `\`${from}\` le dio una bofetada a \`${who}\`.`
 query = 'anime slap'
 break
 case 'sleep': case 'dormir':
-str = from === who ? `\`${from}\` está durmiendo profundamente! (∪｡∪)｡｡｡zzz` : `\`${from}\` duerme junto a \`${who}\`! (∪｡∪)｡｡｡zzz`
+str = from === who ? `\`${from}\` está durmiendo.` : `\`${from}\` duerme junto a \`${who}\`.`
 query = 'anime sleep'
 break
 case 'smoke': case 'fumar':
-str = from === who ? `\`${from}\` está fumando! (￣ー￣)_旦~` : `\`${from}\` está fumando con \`${who}\`! (￣ー￣)_旦~`
+str = from === who ? `\`${from}\` está fumando.` : `\`${from}\` está fumando con \`${who}\`.`
 query = 'anime smoke'
 break
 case 'spit': case 'escupir':
-str = from === who ? `\`${from}\` se escupió a sí mismo/a! ٩(๑˘^˘๑)۶` : `\`${from}\` escupió a \`${who}\`! ٩(๑˘^˘๑)۶`
+str = from === who ? `\`${from}\` se escupió.` : `\`${from}\` escupió a \`${who}\`.`
 query = 'anime spit'
 break
 case 'step': case 'pisar':
-str = from === who ? `\`${from}\` se pisó a sí mismo/a! ಥ_ಥ` : `\`${from}\` pisó a \`${who}\`! sin piedad`
+str = from === who ? `\`${from}\` se pisó.` : `\`${from}\` pisó a \`${who}\`.`
 query = 'anime step'
 break
 case 'think': case 'pensar':
-str = from === who ? `\`${from}\` está pensando! (⸝⸝╸-╺⸝⸝)` : `\`${from}\` está pensando en \`${who}\`! (⸝⸝╸-╺⸝⸝)`
+str = from === who ? `\`${from}\` está pensando.` : `\`${from}\` está pensando en \`${who}\`.`
 query = 'anime think'
 break
 case 'love': case 'enamorado': case 'enamorada':
-str = from === who ? `\`${from}\` está enamorado/a de sí mismo/a! (≧◡≦) ♡` : `\`${from}\` está enamorado/a de \`${who}\`! (≧◡≦) ♡`
+str = from === who ? `\`${from}\` está enamorado de sí mismo.` : `\`${from}\` está enamorado de \`${who}\`.`
 query = 'anime love'
 break
 case 'pat': case 'palmadita': case 'palmada':
-str = from === who ? `\`${from}\` se da palmaditas de autoapoyo! ଘ(੭ˊᵕˋ)੭` : `\`${from}\` acaricia suavemente a \`${who}\`! ଘ(੭ˊᵕˋ)੭`
+str = from === who ? `\`${from}\` se da palmaditas.` : `\`${from}\` acaricia a \`${who}\`.`
 query = 'anime pat'
 break
 case 'poke': case 'picar':
-str = from === who ? `\`${from}\` se da un toque curioso! (,,◕.◕,,)` : `\`${from}\` da un golpecito a \`${who}\`! (,,◕.◕,,)`
+str = from === who ? `\`${from}\` se da un toque.` : `\`${from}\` da un golpecito a \`${who}\`.`
 query = 'anime poke'
 break
 case 'pout': case 'pucheros':
-str = from === who ? `\`${from}\` hace pucheros! (๑•́ ₃ •̀๑)` : `\`${from}\` está haciendo pucheros por \`${who}\`! (๑•́ ₃ •̀๑)`
+str = from === who ? `\`${from}\` hace pucheros.` : `\`${from}\` está haciendo pucheros por \`${who}\`.`
 query = 'anime pout'
 break
 case 'punch': case 'pegar': case 'golpear':
-str = from === who ? `\`${from}\` se golpeó a sí mismo/a! (ദി˙ᗜ˙)` : `\`${from}\` golpea a \`${who}\`! con todas sus fuerzas (ദ്ദി˙ᗜ˙)`
+str = from === who ? `\`${from}\` se golpeó.` : `\`${from}\` golpea a \`${who}\`.`
 query = 'anime punch'
 break
 case 'preg': case 'preñar': case 'embarazar':
-str = from === who ? `\`${from}\` se embarazó solito/a... misterioso! (¬ω¬)` : `\`${from}\` le regaló 9 meses de espera a \`${who}\`! (¬ω¬)`
+str = from === who ? `\`${from}\` se embarazó.` : `\`${from}\` embarazó a \`${who}\`.`
 query = 'anime preg'
 break
 case 'run': case 'correr':
-str = from === who ? `\`${from}\` está haciendo cardio... o eso dice! ┗(＾0＾)┓` : `\`${from}\` sale disparado/a al ver a \`${who}\` acercarse! ┗(＾0＾)┓`
+str = from === who ? `\`${from}\` está corriendo.` : `\`${from}\` corre al ver a \`${who}\`.`
 query = 'anime run'
 break
 case 'sad': case 'triste':
-str = from === who ? `\`${from}\` contempla la lluvia con expresión triste! (｡•́︿•̀｡)` : `\`${from}\` mira por la ventana y piensa en \`${who}\`! (｡•́︿•̀｡)`
+str = from === who ? `\`${from}\` está triste.` : `\`${from}\` está triste por \`${who}\`.`
 query = 'anime sad'
 break
 case 'scared': case 'asustada': case 'asustado':
-str = from === who ? `\`${from}\` se asusta! (꒪ཀ꒪)` : `\`${from}\` está aterrorizado/a de \`${who}\`! (꒪ཀ꒪)`
+str = from === who ? `\`${from}\` se asusta.` : `\`${from}\` está aterrorizado de \`${who}\`.`
 query = 'anime scared'
 break
 case 'seduce': case 'seducir':
-str = from === who ? `\`${from}\` susurra versos de amor al aire! ( ͡° ͜ʖ ͡°)` : `\`${from}\` lanza una mirada que derrite a \`${who}\`! ( ͡° ͜ʖ ͡°)`
+str = from === who ? `\`${from}\` susurra versos de amor.` : `\`${from}\` lanza una mirada a \`${who}\`.`
 query = 'anime seduce'
 break
 case 'shy': case 'timido': case 'timida':
-str = from === who ? `\`${from}\` no sabe cómo actuar... se pone rojo/a! (⸝⸝⸝-﹏-⸝⸝⸝)` : `\`${from}\` baja la mirada tímidamente frente a \`${who}\`! (⸝⸝⸝-﹏-⸝⸝⸝)`
+str = from === who ? `\`${from}\` es tímido.` : `\`${from}\` baja la mirada frente a \`${who}\`.`
 query = 'anime shy'
 break
 case 'walk': case 'caminar':
-str = from === who ? `\`${from}\` pasea! ┌( ಠ‿ಠ)┘` : `\`${from}\` está caminando con \`${who}\`! ┌( ಠ‿ಠ)┘`;
+str = from === who ? `\`${from}\` pasea.` : `\`${from}\` está caminando con \`${who}\`.`;
 query = 'anime walk' 
 break
 case 'dramatic': case 'drama':
-str = from === who ? `\`${from}\` está montando un show digno de un Oscar! (┬┬﹏┬┬)` : `\`${from}\` está actuando dramáticamente por \`${who}\`! (┬┬﹏┬┬)`
+str = from === who ? `\`${from}\` está siendo dramático.` : `\`${from}\` está actuando dramáticamente por \`${who}\`.`
 query = 'anime dramatic'
 break
 case 'kisscheek': case 'beso':
-str = from === who ? `\`${from}\` se besó la mejilla con cariño! (˶ ˘ ³˘)` : `\`${from}\` besó la mejilla de \`${who}\` con ternura! (˶ ˘ ³˘)`
+str = from === who ? `\`${from}\` se besó la mejilla.` : `\`${from}\` besó la mejilla de \`${who}\`.`
 query = 'anime kisscheek'
 break
 case 'wink': case 'guiñar':
-str = from === who ? `\`${from}\` se guiñó el ojo a sí mismo/a en el espejo! (⸝⸝> ᴗ•⸝⸝)` : `\`${from}\` le guiñó el ojo a \`${who}\`! (⸝⸝> ᴗ•⸝⸝)`
+str = from === who ? `\`${from}\` guiñó el ojo.` : `\`${from}\` le guiñó el ojo a \`${who}\`.`
 query = 'anime wink'
 break
 case 'cringe': case 'avergonzarse':
-str = from === who ? `\`${from}\` siente cringe! (ᇂ_ᇂ|||)` : `\`${from}\` siente cringe por \`${who}\`! (ᇂ_ᇂ|||)`
+str = from === who ? `\`${from}\` siente cringe.` : `\`${from}\` siente cringe por \`${who}\`.`
 query = 'anime cringe'
 break
 case 'smug': case 'presumir':
-str = from === who ? `\`${from}\` está presumiendo mucho últimamente! ପ(๑•ᴗ•๑)ଓ` : `\`${from}\` está presumiendo a \`${who}\`! ପ(๑•ᴗ•๑)ଓ`
+str = from === who ? `\`${from}\` está presumiendo.` : `\`${from}\` está presumiendo a \`${who}\`.`
 query = 'anime smug'
 break
 case 'smile': case 'sonreir':
-str = from === who ? `\`${from}\` está sonriendo! ( ˶ˆᗜˆ˵ )` : `\`${from}\` le sonrió a \`${who}\`! ( ˶ˆᗜˆ˵ )`
+str = from === who ? `\`${from}\` está sonriendo.` : `\`${from}\` le sonrió a \`${who}\`.`
 query = 'anime smile'
 break
 case 'clap': case 'aplaudir':
-str = from === who ? `\`${from}\` está aplaudiendo por algo! (୨୧•͈ᴗ•͈)` : `\`${from}\` está aplaudiendo por \`${who}\`! (୨୧•͈ᴗ•͈)`
+str = from === who ? `\`${from}\` está aplaudiendo.` : `\`${from}\` está aplaudiendo por \`${who}\`.`
 query = 'anime clap'
 break
 case 'highfive': case '5':
-str = from === who ? `\`${from}\` se chocó los cinco frente al espejo! (•̀o•́)ง` : `\`${from}\` chocó los 5 con \`${who}\`! (•̀o•́)ง٩(ˊᗜˋ)`
+str = from === who ? `\`${from}\` chocó los cinco.` : `\`${from}\` chocó los 5 con \`${who}\`.`
 query = 'anime highfive'
 break
 case 'handhold': case 'mano':
-str = from === who ? `\`${from}\` se dio la mano consigo mismo/a! (∩•̀ω•́)⊃` : `\`${from}\` le agarró la mano a \`${who}\`! (∩•̀ω•́)⊃`
+str = from === who ? `\`${from}\` se dio la mano.` : `\`${from}\` le agarró la mano a \`${who}\`.`
 query = 'anime handhold'
 break
 case 'bullying': case 'bully':
-str = from === who ? `\`${from}\` se hace bullying solo… alguien abrácelo! ༼ ಠДಠ ༽` : `\`${from}\` le está haciendo bullying a \`${who}\`! ༼ ಠДಠ ༽`
+str = from === who ? `\`${from}\` se hace bullying.` : `\`${from}\` le está haciendo bullying a \`${who}\`.`
 query = 'anime bullying'
 break
 case 'wave': case 'hola': case 'ola':
-str = from === who ? `\`${from}\` se saludó a sí mismo/a en el espejo! (๑˃̵ᴗ˂̵)و` : `\`${from}\` está saludando a \`${who}\`! (๑˃̵ᴗ˂̵)و`
+str = from === who ? `\`${from}\` se saludó.` : `\`${from}\` está saludando a \`${who}\`.`
 query = 'anime wave'
 break
 }
@@ -209,11 +209,11 @@ try {
 const res = await fetch(`${global.APIs.delirius.url}/search/tenor?q=${query}`)
 const json = await res.json()
 const gifs = json.data
-if (!gifs || gifs.length === 0) return m.reply('ꕥ No se encontraron resultados.')
+if (!gifs || gifs.length === 0) return m.reply('No se encontraron resultados.')
 const randomGif = gifs[Math.floor(Math.random() * gifs.length)].mp4
 conn.sendMessage(m.chat, { video: { url: randomGif }, gifPlayback: true, caption: str, mentions: [who] }, { quoted: m })
 } catch (e) {
-return m.reply(`⚠︎ Se ha producido un problema.\n> Usa *${usedPrefix}report* para informarlo.\n\n${e.message}`)
+return m.reply(`Se ha producido un problema. Usa *${usedPrefix}report* para informarlo.`)
 }}}
 
 handler.help = ['angry', 'enojado', 'bath', 'bañarse', 'bite', 'morder', 'bleh', 'lengua', 'blush', 'sonrojarse', 'bored', 'aburrido', 'clap', 'aplaudir', 'coffee', 'cafe', 'café', 'cry', 'llorar', 'cuddle', 'acurrucarse', 'dance', 'bailar', 'drunk', 'borracho', 'eat', 'comer', 'facepalm', 'palmada', 'happy', 'feliz', 'hug', 'abrazar', 'kill', 'matar', 'kiss', 'muak', 'laugh', 'reirse', 'lick', 'lamer', 'slap', 'bofetada', 'sleep', 'dormir', 'smoke', 'fumar', 'spit', 'escupir', 'step', 'pisar', 'think', 'pensar', 'love', 'enamorado', 'enamorada', 'pat', 'palmadita', 'palmada', 'poke', 'picar', 'pout', 'pucheros', 'punch', 'pegar', 'golpear', 'preg', 'preñar', 'embarazar', 'run', 'correr', 'sad', 'triste', 'scared', 'asustada', 'asustado', 'seduce', 'seducir', 'shy', 'timido', 'timida', 'walk', 'caminar', 'dramatic', 'drama', 'kisscheek', 'beso', 'wink', 'guiñar', 'cringe', 'avergonzarse', 'smug', 'presumir', 'smile', 'sonreir', 'clap', 'aplaudir', 'highfive', '5', 'bully', 'bullying', 'mano', 'handhold', 'ola', 'wave', 'hola']

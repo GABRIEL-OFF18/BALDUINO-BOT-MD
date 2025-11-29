@@ -16,31 +16,31 @@ const chatLabel = m.isGroup ? (await conn.getName(m.chat) || 'Grupal') : 'Privad
 const horario = `${moment.tz('America/Caracas').format('DD/MM/YYYY hh:mm:ss A')}`
 switch (command) {
 case 'suggest': case 'sug': {
-if (!text) return conn.reply(m.chat, '❀ Escribe la sugerencia que quieres enviar al propietario de la Bot.', m)
-if (text.length < 10) return conn.reply(m.chat, 'ꕥ La sugerencia debe tener más de 10 caracteres.', m)
+if (!text) return conn.reply(m.chat, 'Escribe la sugerencia que quieres enviar al propietario de la Bot.', m)
+if (text.length < 10) return conn.reply(m.chat, 'La sugerencia debe tener más de 10 caracteres.', m)
 await m.react('🕒')
-const sug = `❀ 𝗦𝗨𝗚𝗘𝗥𝗘𝗡𝗖𝗜𝗔 𝗥𝗘𝗖𝗜𝗕𝗜𝗗𝗔\n\nꕥ *Usuario* » ${nombre}\n✩ *Tag* » ${tag}\n✿ *Sugerencia* » ${text}\n✦ *Chat* » ${chatLabel}\n✰ *Fecha* » ${horario}\n♤ *InfoBot* » ${botname} / ${vs}`
+const sug = `SUGERENCIA RECIBIDA\n\nUsuario: ${nombre}\nTag: ${tag}\nSugerencia: ${text}\nChat: ${chatLabel}\nFecha: ${horario}\nInfoBot: ${botname} / ${vs}`
 await conn.sendMessage(`${suittag}@s.whatsapp.net`, { text: sug, mentions: [m.sender, ...usertag] }, { quoted: m })
 await m.react('✔️')
-m.reply('❀ La sugerencia ha sido enviada al desarrollador. Gracias por contribuir a mejorar nuestra experiencia.')
+m.reply('La sugerencia ha sido enviada al desarrollador. Gracias por contribuir a mejorar nuestra experiencia.')
 break
 }
 case 'report': case 'reportar': {
-if (!text) return conn.reply(m.chat, '❀ Por favor, ingresa el error que deseas reportar.', m)
-if (text.length < 10) return conn.reply(m.chat, 'ꕥ Especifique mejor el error, mínimo 10 caracteres.', m)
+if (!text) return conn.reply(m.chat, 'Por favor, ingresa el error que deseas reportar.', m)
+if (text.length < 10) return conn.reply(m.chat, 'Especifique mejor el error, mínimo 10 caracteres.', m)
 await m.react('🕒')
-const rep = `❀ 𝗥𝗘𝗣𝗢𝗥𝗧𝗘 𝗥𝗘𝗖𝗜𝗕𝗜𝗗𝗢\n\nꕥ *Usuario* » ${nombre}\n✩ *Tag* » ${tag}\n✿ *Reporte* » ${text}\n✦ *Chat* » ${chatLabel}\n✰ *Fecha* » ${horario}\n♤ *InfoBot* » ${botname} / ${vs}`
+const rep = `REPORTE RECIBIDO\n\nUsuario: ${nombre}\nTag: ${tag}\nReporte: ${text}\nChat: ${chatLabel}\nFecha: ${horario}\nInfoBot: ${botname} / ${vs}`
 await conn.sendMessage(`${suittag}@s.whatsapp.net`, { text: rep, mentions: [m.sender, ...usertag] }, { quoted: m })
 await m.react('✔️')
-m.reply('❀ El informe ha sido enviado al desarrollador. Ten en cuenta que cualquier reporte falso podría resultar en restricciones en el uso del *Bot*.')
+m.reply('El informe ha sido enviado al desarrollador. Ten en cuenta que cualquier reporte falso podría resultar en restricciones en el uso del Bot.')
 break
 }
 case 'invite': {
-if (!text) return m.reply(`❀ Debes enviar un enlace para invitar el Bot a tu grupo.`)
+if (!text) return m.reply(`Debes enviar un enlace para invitar el Bot a tu grupo.`)
 let [_, code] = text.match(linkRegex) || []
-if (!code) return m.reply('ꕥ El enlace de invitación no es válido.')
+if (!code) return m.reply('El enlace de invitación no es válido.')
 await m.react('🕒')
-const invite = `❀ 𝗜𝗡𝗩𝗜𝗧𝗔𝗖𝗜𝗢𝗡 𝗔 𝗨𝗡 𝗚𝗥𝗨𝗣𝗢\n\nꕥ *Usuario* » ${nombre}\n✩ *Tag* » ${tag}\n✿ *Chat* » ${chatLabel}\n✰ *Fecha* » ${horario}\n♤ *InfoBot* » ${botname} / ${vs}\n✦ *Link* » ${text}`
+const invite = `INVITACIÓN A UN GRUPO\n\nUsuario: ${nombre}\nTag: ${tag}\nChat: ${chatLabel}\nFecha: ${horario}\nInfoBot: ${botname} / ${vs}\nLink: ${text}`
 const mainBotNumber = global.conn.user.jid.split('@')[0]
 const senderBotNumber = conn.user.jid.split('@')[0]
 if (mainBotNumber === senderBotNumber)
@@ -48,7 +48,7 @@ await conn.sendMessage(`${suittag}@s.whatsapp.net`, { text: invite, mentions: [m
 else
 await conn.sendMessage(`${senderBotNumber}@s.whatsapp.net`, { text: invite, mentions: [m.sender, ...usertag] }, { quoted: m })
 await m.react('✔️')
-m.reply('❀ El enlace fue enviado correctamente. ¡Gracias por tu invitación! ฅ^•ﻌ•^ฅ')
+m.reply('El enlace fue enviado correctamente. ¡Gracias por tu invitación!')
 break
 }
 case 'speedtest': case 'stest': {
@@ -96,7 +96,7 @@ await m.react('✔️')
 break
 }}} catch (err) {
 await m.react('✖️')
-conn.reply(m.chat, `⚠︎ Se ha producido un problema.\n> Usa *${usedPrefix}report* para informarlo.\n\n${err.message}`, m)
+conn.reply(m.chat, `⚠︎ Se ha producido un problema.\n> Usa \*${usedPrefix}report\* para informarlo.\n\n${err.message}
 }}
 
 handler.help = ['suggest', 'reporte', 'invite', 'speedtest', 'fixmsg', 'script']
