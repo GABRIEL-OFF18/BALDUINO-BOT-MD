@@ -31,7 +31,7 @@ global.dev = "© ⍴᥆ᥕᥱrᥱძ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ 𒆜"
 global.author = "© mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ 𒆜"
 global.etiqueta = "ᴀʙʀᴀʜᴀɴ-ᴍ"
 global.currency = "¥enes"
-global.banner = "https://spacny.wuaze.com//uploads/catalogo_1.jpg"
+global.banner = "https://qu.ax/GoebB.jpg"
 global.icono = "https://qu.ax/GoebB.jpg"
 global.catalogo = fs.readFileSync('./lib/catalogo.jpg')
 
