@@ -19,13 +19,11 @@ await conn.sendMessage(m.chat, { image: thumb, caption: info }, { quoted: m })
 if (['play', 'yta', 'ytmp3', 'playaudio'].includes(command)) {
 const audio = await getAud(url)
 if (!audio?.url) throw 'Error: No se pudo obtener el audio.'
-m.reply(`> *Audio procesado. Servidor:* \`${audio.api}\``)
 await conn.sendMessage(m.chat, { audio: { url: audio.url }, fileName: `${title}.mp3`, mimetype: 'audio/mpeg' }, { quoted: m })
 await m.react('✔️')
 } else if (['play2', 'ytv', 'ytmp4', 'mp4'].includes(command)) {
 const video = await getVid(url)
 if (!video?.url) throw 'Error: No se pudo obtener el video.'
-m.reply(`> *Vídeo procesado. Servidor:* \`${video.api}\``)
 await conn.sendFile(m.chat, video.url, `${title}.mp4`, `> ${title}`, m)
 await m.react('✔️')
 }} catch (e) {
@@ -64,18 +62,28 @@ const apis = [
 return await fetchFromApis(apis)
 }
 async function fetchFromApis(apis) {
-for (const { api, endpoint, extractor } of apis) {
-try {
-const controller = new AbortController()
-const timeout = setTimeout(() => controller.abort(), 10000)
-const res = await fetch(endpoint, { signal: controller.signal }).then(r => r.json())
-clearTimeout(timeout)
-const link = extractor(res)
-if (link) return { url: link, api }
-} catch (e) {}
-await new Promise(resolve => setTimeout(resolve, 500))
-}
-return null
+  const promises = apis.map(async ({ api, endpoint, extractor }) => {
+    try {
+      const controller = new AbortController()
+      const timeout = setTimeout(() => controller.abort(), 10000)
+      const res = await fetch(endpoint, { signal: controller.signal })
+      clearTimeout(timeout)
+      if (!res.ok) throw new Error(`API request failed with status ${res.status}`)
+      const json = await res.json()
+      const link = extractor(json)
+      if (link) return { url: link, api }
+      else throw new Error('Invalid or empty link extracted')
+    } catch (e) {
+      throw new Error(`Failed to fetch from ${api}: ${e.message}`)
+    }
+  })
+
+  try {
+    return await Promise.any(promises)
+  } catch (e) {
+    console.error("All APIs failed:", e)
+    return null
+  }
 }
 function formatViews(views) {
 if (views === undefined) return "No disponible"
