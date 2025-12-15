@@ -25,12 +25,12 @@ global.yukiJadibts = true
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.botname = "ʙɪʟʟɪᴇ ʙᴏᴛ"
-global.textbot = "ʙɪʟʟɪᴇ, mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ"
+global.botname = "sᴀᴋᴜɴᴀ ʙᴏᴛ ᴠ2 ༒︎"
+global.textbot = "sᴀᴋᴜɴᴀ, mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ"
 global.dev = "© ⍴᥆ᥕᥱrᥱძ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ 𒆜"
 global.author = "© mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ 𒆜"
 global.etiqueta = "ᴀʙʀᴀʜᴀɴ-ᴍ"
-global.currency = "¥enes"
+global.currency = "ᴅᴏʟᴀʀᴇs"
 global.banner = "https://files.catbox.moe/nsj61q.jpg"
 global.icono = "https://files.catbox.moe/vpwasd.jpg"
 global.video = "https://files.catbox.moe/gfmlh4.mp4"
