@@ -32,7 +32,7 @@ global.author = "© mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ 𒆜"
 global.etiqueta = "ᴀʙʀᴀʜᴀɴ-ᴍ"
 global.currency = "¥enes"
 global.banner = "https://files.catbox.moe/nsj61q.jpg"
-global.icono = "https://files.catbox.moe/boq8yt.jpg"
+global.icono = "https://files.catbox.moe/vpwasd.jpg"
 global.video = "https://files.catbox.moe/gfmlh4.mp4"
 global.catalogo = fs.readFileSync('./lib/catalogo.jpg')
 
