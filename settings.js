@@ -25,8 +25,8 @@ global.yukiJadibts = true
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.botname = "sᴀᴋᴜɴᴀ ʙᴏᴛ ᴠ2 ༒︎"
-global.textbot = "sᴀᴋᴜɴᴀ, mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ"
+global.botname = "sᴜᴋᴜɴᴀ ʙᴏᴛ ᴠ2 ༒︎"
+global.textbot = "sᴜᴋᴜɴᴀ, mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ"
 global.dev = "© ⍴᥆ᥕᥱrᥱძ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ 𒆜"
 global.author = "© mᥲძᥱ ᥕі𝗍һ ᑲᥡ ᴀʙʀᴀʜᴀɴ-ᴍ 𒆜"
 global.etiqueta = "ᴀʙʀᴀʜᴀɴ-ᴍ"
