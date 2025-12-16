@@ -18,18 +18,21 @@ if (seconds > 1800) throw '⚠ El contenido supera el límite de duración (10 m
 const vistas = formatViews(views)
 const info = `「✦」Descargando *<${title}>*\n\n> ❑ Canal » *${author.name}*\n> ♡ Vistas » *${vistas}*\n> ✧︎ Duración » *${timestamp}*\n> ☁︎ Publicado » *${ago}*\n> ➪ Link » ${url}`
 
+// Send info and thumbnail first for instant feedback
+const thumb = (await conn.getFile(thumbnail)).data
+await conn.sendMessage(m.chat, { image: thumb, caption: info }, { quoted: m })
+
+// Now, fetch the media and send it
 const isAudio = ['play', 'yta', 'ytmp3', 'playaudio'].includes(command)
 const isVideo = ['play2', 'ytv', 'ytmp4', 'mp4'].includes(command)
 
-const [thumbResult, media] = await Promise.all([
-  conn.getFile(thumbnail),
-  isAudio ? getAud(url) : getVid(url)
-])
+const media = await (isAudio ? getAud(url) : getVid(url))
 
-if (!media?.url) throw `⚠ No se pudo obtener el ${isAudio ? 'audio' : 'video'}.`
+if (!media?.url) {
+  await m.react('✖️')
+  return m.reply(`⚠ No se pudo obtener el enlace de descarga para ${isAudio ? 'audio' : 'video'}.`)
+}
 
-const thumb = thumbResult.data
-await conn.sendMessage(m.chat, { image: thumb, caption: info }, { quoted: m })
 m.reply(`> ❀ *${isAudio ? 'Audio' : 'Vídeo'} procesado. Servidor:* \`${media.api}\``)
 
 if (isAudio) {
