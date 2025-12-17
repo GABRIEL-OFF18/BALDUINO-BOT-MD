@@ -49,9 +49,9 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
   }
 }
 
-handler.help = ['play', 'yta', 'ytmp3', 'play2', 'ytv', 'ytmp4']
+handler.help = ['play', 'yta', 'ytmp3', 'playaudio', 'play2', 'ytv', 'ytmp4', 'mp4']
 handler.tags = ['descargas']
-handler.command = /^(play|yta|ytmp3|play2|ytv|ytmp4)$/i
+handler.command = /^(play|yta|ytmp3|playaudio|play2|ytv|ytmp4|mp4)$/i
 handler.group = true
 
 export default handler
