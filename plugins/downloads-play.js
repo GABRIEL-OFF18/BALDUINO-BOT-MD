@@ -1,5 +1,6 @@
 import yts from 'yt-search'
-import fetch from 'node-fetch'
+import ytdl from 'ytdl-core'
+import fs from 'fs'
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
@@ -11,7 +12,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     const video = search.videos[0]
     if (!video) throw '🚩 *No se encontraron resultados*'
 
-    const { title, thumbnail, timestamp, views, ago, url, videoId } = video
+    const { title, thumbnail, timestamp, views, ago, url } = video
 
     const infoCaption = `
 *${title}*
@@ -23,18 +24,21 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     await conn.sendMessage(m.chat, { image: { url: thumbnail }, caption: infoCaption }, { quoted: m })
 
     const isAudio = ['play', 'yta', 'ytmp3', 'playaudio'].includes(command)
-    const streamType = isAudio ? 'audio' : 'video'
-    const apiURL = `https://nekos.club/api/yt/stream?id=${videoId}&type=${streamType}`
+
+    const stream = ytdl(url, {
+      filter: isAudio ? 'audioonly' : 'videoandaudio',
+      quality: 'lowest',
+    })
 
     if (isAudio) {
       await conn.sendMessage(m.chat, {
-        audio: { url: apiURL },
+        audio: stream,
         mimetype: 'audio/mpeg',
         fileName: `${title}.mp3`
       }, { quoted: m })
     } else {
       await conn.sendMessage(m.chat, {
-        video: { url: apiURL },
+        video: stream,
         mimetype: 'video/mp4',
         fileName: `${title}.mp4`,
         caption: `*${title}*`
