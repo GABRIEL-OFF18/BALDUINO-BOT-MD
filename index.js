@@ -33,7 +33,7 @@ const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
 
 let { say } = cfonts
 console.log(chalk.magentaBright('\n❀ Iniciando...'))
-say('SUKUNA V2', {
+say('SUKUNA BOT V2', {
 font: 'simple',
 align: 'left',
 gradient: ['green', 'white']
