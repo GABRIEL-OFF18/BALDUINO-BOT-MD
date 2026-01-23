@@ -51,7 +51,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 ⏳ 𝑫𝒖𝒓𝒂𝒄𝒊𝒐́𝒏: ${durationTimestamp}
 🌐 𝑬𝒏𝒍𝒂𝒄𝒆: ${url}
 
-✧━───『 Itachi 𝑩𝒐𝒕 』───━✧
+✧━───『 YUKI-BOT 』───━✧
 ⚡ 𝑷𝒐𝒘𝒆𝒓𝒆𝒅 𝒃𝒚 Gabrie-ux ⚡
 `
 
@@ -61,7 +61,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       {
         image: thumb,
         caption,
-        footer: "⚡ Itachi — Descargas rápidas ⚡",
+        footer: "⚡ yuki — Descargas rápidas ⚡",
         buttons: [
           { buttonId: `shadowaudio ${url}`, buttonText: { displayText: "🎵 𝘿𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝘼𝙪𝙙𝙞𝙤" }, type: 1 },
           { buttonId: `shadowvideo ${url}`, buttonText: { displayText: "🎬 𝘿𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙑𝙞𝙙𝙚𝙤" }, type: 1 }
@@ -158,7 +158,7 @@ const formatViews = (views) => {
 }
 
 handler.command = ["play", "yt", "ytsearch"]
-handler.tags = ["downloader"]
+handler.tags = ["descargas"]
 handler.register = true
 
 export default handler
