@@ -130,7 +130,7 @@ let handler = async (m, { conn, usedPrefix, __dirname }) => {
   await conn.sendMessage(m.chat, {
     document: Buffer.alloc(10), 
     mimetype: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    fileName: 'Itachi bot',
+    fileName: 'Yuki bot',
     fileLength: 1024 * 1024 * 1024,
     caption: finalMenu,
     jpegThumbnail: thumbnail,
@@ -142,8 +142,8 @@ let handler = async (m, { conn, usedPrefix, __dirname }) => {
         serverMessageId: -1
       },
       externalAdReply: {
-        title: 'Itachi 𝖡𝗈𝗍 𝖵1 𐂂',
-        body: 'ItachibotV1',
+        title: 'YUKI 𝖡𝗈𝗍 𝖵2 𐂂',
+        body: 'YUkIbotV2',
         thumbnailUrl: 'https://qu.ax/DVlzO',
         thumbnail: thumbChannel,
         mediaType: 1,
