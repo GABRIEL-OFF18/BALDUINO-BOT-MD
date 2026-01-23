@@ -86,7 +86,7 @@ let handler = async (m, { conn, usedPrefix, __dirname }) => {
     'info': 'ᴍᴇɴᴜ ɪɴғᴏ',
     'anime': 'ᴍᴇɴᴜ ᴀɴɪᴍᴇ',
     'buscador': 'ᴍᴇɴᴜ ʙᴜsᴄᴀᴅᴏʀ',
-    'descargador': 'ᴍᴇɴᴜ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ',
+    'descargas': 'ᴍᴇɴᴜ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ',
     'fun': 'ᴍᴇɴᴜ ғᴜɴ',
     'grupo': 'ᴍᴇɴᴜ ɢʀᴜᴘᴏ',
     'ai': 'ᴍᴇɴᴜ ᴀɪ',
