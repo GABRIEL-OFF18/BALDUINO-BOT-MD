@@ -137,7 +137,7 @@ let handler = async (m, { conn, usedPrefix, __dirname }) => {
     contextInfo: {
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: '118157285302731600@newsletter',
+        newsletterJid: '120363424677971125@newsletter',
         newsletterName: 'Canal de ITACHI',
         serverMessageId: -1
       },
